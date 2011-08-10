@@ -2,7 +2,7 @@
 LIBS=csfml-system csfml-window csfml-graphics csfml-audio
 SOURCES := $((wildcard *.c)
 OBJS := $(patsubst %.c, %.o,  $(SOURCES))
-DIRS = scenes
+DIRS = scenes stuff
 CC = gcc
 CFLAGS = -g -Wall -std=c99
 

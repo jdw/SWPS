@@ -14,7 +14,7 @@ typedef struct {
 	F_tileType type;
 } F_tile;
 
-static int
+F_tile*
 F_stuff_tile_create();
 
 #endif // F_STUFF_TILE_H
