@@ -4,11 +4,16 @@ CC=gcc
 CFLAGS=-g -std=c99 -Wall
 LIBS=csfml-system csfml-window csfml-graphics csfml-audio 
 TARGET=swps
+SOURCES = $(wildcard src/*.c)
+OBJS = $(patsubst src/%.c,%.o, $(SOURCES))
+#OBJS = main.o
 
-default:
-	make -C src
-	$(CC) $(addprefix -l, $(LIBS)) bin/* -o $(TARGET)
+swps: $(OBJS)
+	$(CC) $(CFLAGS) $(addprefix -l,$(LIBS)) $(addprefix bin/,$^) -o $@
+
+%.o : 
+	$(CC) $(CFLAGS) -c src/$(patsubst %.o,%.c, $@) -o bin/$@ -Isrc/
 
 clean:
-	rm $(TARGET)
-	rm -R bin/*
+	rm -f $(TARGET)
+	rm -Rf bin/*
