@@ -1,8 +1,9 @@
 #include <SFML/Audio.h>
 #include <SFML/Graphics.h>
 #include <stdio.h>
+#include <SFML/Graphics/Font.h>
 
-static sfFont* t_debugFont = 0;
+sfFont* g_debugFont = 0;
 static sfWindowSettings WINDOW_SETTINGS = {24, 8, 0}; 
 static sfVideoMode VIDEO_MODE = {800, 600, 32};
 static sfRenderWindow* APP;
@@ -16,26 +17,23 @@ typedef enum {
 
 static int
 init() {
-    // Loading debug font
-	t_debugFont = sfFont_CreateFromFile("ass/FreeMonoBold.ttf", 50, NULL);
-    if (!t_debugFont) return FAILED_LOADING_FONT_FILE;
-    //Text = sfString_Create();
-	//sfString_SetText(Text, "Hello SFML");
-	//sfString_SetFont(Text, Font);
-	//sfString_SetSize(Text, 50);
+	// Loading debug font
+	g_debugFont = sfFont_CreateFromFile("ass/FreeSerif.ttf", 50, NULL);
+	if (!g_debugFont) return FAILED_LOADING_FONT_FILE;
 
 	return AOK;
 }
 
 int
 main() {
-	//sfRenderWindow* App;
-	//sfImage* Image;
-	//sfString* Text;
-	
+	sfImage* t_pImage;
+	sfString* t_pText = 0;
+	sfSprite* t_pSprite = 0;
+
 	int t_initReturn;
 	if ((t_initReturn = init())) {
 		printf("init() failed with code: %d\n", t_initReturn);
+		return t_initReturn;
 	}
 
 	sfEvent t_event;
@@ -53,23 +51,17 @@ main() {
 	if (!APP) return EXIT_FAILURE;
 
 	// Load a sprite to display
-	//Image = sfImage_CreateFromFile("cute_image.jpg");
-	//if (!Image) return EXIT_FAILURE;
-	//Sprite = sfSprite_Create();
-	//sfSprite_SetImage(Sprite, Image);
+	t_pImage = sfImage_CreateFromFile("ass/cute_image.jpg");
+	if (!t_pImage) return EXIT_FAILURE;
+	t_pSprite = sfSprite_Create();
+	sfSprite_SetImage(t_pSprite, t_pImage);
 
 	// Create a graphical string to display 
-	//Text = sfString_Create();
-    //sfString_SetText(Text, "Hello SFML");
-    //sfString_SetFont(Text, Font);
-    //sfString_SetSize(Text, 50);
- 
-     // Load a music to play
-     //Music = sfMusic_CreateFromFile("nice_music.ogg");
-     //if (!Music) return EXIT_FAILURE;
-
-	// Play the music
-    //sfMusic_Play(Music);
+	t_pText = sfString_Create();
+	sfString_SetFont(t_pText, g_debugFont);
+	sfString_SetText(t_pText, "Hello");
+	sfString_SetSize(t_pText, 50);
+	sfColor t_color = {200,200,200,5};
  
 	// Start the game loop
 	while (sfRenderWindow_IsOpened(APP)) {
@@ -85,26 +77,19 @@ main() {
 			if (t_event.Type == sfEvtClosed || t_quit)
                  sfRenderWindow_Close(APP);
          }
- 
-         // Clear the screen
-         //sfRenderWindow_Clear(App, sfBlack);
- 
-         // Draw the sprite
-         //sfRenderWindow_DrawSprite(App, Sprite);
- 
-         // Draw the string
-         //sfRenderWindow_DrawString(App, Text);
- 
-         // Update the window
-         sfRenderWindow_Display(APP);
+ 		
+		// Clear the screen
+		sfRenderWindow_Clear(APP, sfBlack);
+ 		// Draw the sprite
+		sfRenderWindow_DrawSprite(APP, t_pSprite);
+		// Draw the string
+		sfRenderWindow_DrawString(APP, t_pText);
+		// Update the window
+		sfRenderWindow_Display(APP);
      }
  
 	// Cleanup resources
-	//sfMusic_Destroy(Music);
-	//sfString_Destroy(Text);
-	sfFont_Destroy(t_debugFont);
-	//sfSprite_Destroy(Sprite);
-	//sfImage_Destroy(Image);
+	sfString_Destroy(t_pText);
 	sfRenderWindow_Destroy(APP);
  
 	return EXIT_SUCCESS;
