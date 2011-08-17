@@ -6,7 +6,6 @@
 #include <SFML/Graphics.h>
 #include <stdio.h>
 
-
 #include <SFML/Graphics/Font.h>
 
 F_UI*
@@ -15,7 +14,8 @@ F_UI_create() {
 	
 	for (int i = 0; i < MESSAGE_ROWS; ++i)
 		t_pRet->pMessages[i] = 0;
-	
+
+	t_pRet->pInfos = (fUI_info*) malloc(2 * sizeof(fUI_info));
 	t_pRet->showFPS = 0;
 	t_pRet->playerHealth = 0.f;
 	t_pRet->playerEnergy = 0.f;

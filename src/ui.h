@@ -5,8 +5,23 @@
 struct sfRenderWindow;
 #include <SFML/Graphics.h>
 
+typedef enum {
+	STRING,
+	INT,
+	FLOAT
+} fUI_info_type;
+
+typedef struct fUI_info {
+	char* pKey;
+	fUI_info_type type;
+	int iValue;
+	float fValue;
+	char* pValue;
+} fUI_info;
+
 typedef struct F_UI {
 	char* pMessages[MESSAGE_ROWS];
+	fUI_info* pInfos;
 	int showFPS;
 	float playerHealth;
 	float playerEnergy;
