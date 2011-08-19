@@ -1,6 +1,6 @@
 
 
-CC=gcc
+CC=colorgcc
 CFLAGS=-g -std=c99 -Wall
 LIBS=csfml-system csfml-window csfml-graphics csfml-audio 
 TARGET=swps
