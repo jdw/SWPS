@@ -12,8 +12,6 @@ static sfFont* g_debugFont = 0;
 static sfWindowSettings WINDOW_SETTINGS = {24, 8, 0}; 
 static sfVideoMode VIDEO_MODE = {800, 600, 32};
 static sfRenderWindow* APP = 0;
-static sfSprite* g_pWall;
-static sfSprite* g_pFloor;
 static sfSprite* g_pPlayer;
 static sfSprite* g_pNPC;
 static fUI* g_pUI;
@@ -28,19 +26,8 @@ init() {
 	g_debugFont = sfFont_CreateFromFile("ass/FreeSerif.ttf", 50, NULL);
 	if (!g_debugFont) return FAILED_LOADING_FONT_FILE;
 
-	// Wall and floor graphics
-	sfImage* t_pImage = sfImage_CreateFromFile("ass/wall_stone.png");
-	if (!t_pImage) return EXIT_FAILURE;
-	g_pWall = sfSprite_Create();
-	sfSprite_SetImage(g_pWall, t_pImage);
-
-	t_pImage = sfImage_CreateFromFile("ass/dirt_floor.png");
-	if (!t_pImage) return EXIT_FAILURE;
-	g_pFloor = sfSprite_Create();
-	sfSprite_SetImage(g_pFloor, t_pImage);
-	
 	// Player and NPC
-	t_pImage = sfImage_CreateFromFile("ass/hero.png");
+	sfImage* t_pImage = sfImage_CreateFromFile("ass/hero.png");
 	if (!t_pImage) return EXIT_FAILURE;
 	g_pPlayer = sfSprite_Create();
 	sfSprite_SetImage(g_pPlayer, t_pImage);
@@ -130,6 +117,7 @@ main() {
 	int t_y = 100 + 3 * 16;
 	
 	fMap* test = fMap_create(10, 10);
+	fMap_init(test);
 
 	// Create a graphical string to display 
 	t_pText = sfString_Create();
@@ -161,13 +149,8 @@ main() {
 		fMap_update(test);
 
 		// Draw the map
-		for (int y = 0; y < 15; ++y)
-			for (int x = 0; x < 10; ++x) {
-				int t_xPos = 100 + x * 16;
-				int t_yPos = 100 + y * 16;
-				F_draw(MAP, (t_pMap[x][y] == '#')? g_pWall: g_pFloor, t_xPos, t_yPos);	
-			}
-
+		fMap_draw(test, APP);
+		
 		// Draw enemy
 		F_draw(NPC, g_pNPC, 100 + 3 * 16, 100 + 3 * 16);
 		
