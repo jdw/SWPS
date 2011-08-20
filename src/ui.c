@@ -8,40 +8,40 @@
 
 #include <SFML/Graphics/Font.h>
 
-F_UI*
-F_UI_create() {
-	F_UI* t_pRet = (F_UI*) malloc(sizeof(F_UI));
+fUI*
+fUI_create() {
+	fUI* t_ret = (fUI*) malloc(sizeof(fUI));
 	
 	for (int i = 0; i < MESSAGE_ROWS; ++i)
-		t_pRet->pMessages[i] = 0;
+		t_ret->pMessages[i] = 0;
 
-	t_pRet->pInfos = (fUI_info*) malloc(2 * sizeof(fUI_info));
-	t_pRet->pInfos[0].pKey = "HP";
-	t_pRet->pInfos[0].type = FLOAT;
-	t_pRet->pInfos[0].fValue = 1;
-	t_pRet->pInfos[1].pKey = "MP";
-	t_pRet->pInfos[1].type = FLOAT;
-	t_pRet->pInfos[1].fValue = .5f;
+	t_ret->pInfos = (fUI_info*) malloc(2 * sizeof(fUI_info));
+	t_ret->pInfos[0].pKey = "HP";
+	t_ret->pInfos[0].type = FLOAT;
+	t_ret->pInfos[0].fValue = 1;
+	t_ret->pInfos[1].pKey = "MP";
+	t_ret->pInfos[1].type = FLOAT;
+	t_ret->pInfos[1].fValue = .5f;
 
-	t_pRet->showFPS = 0; //???
-	t_pRet->playerHealth = 0.f; // ???
-	t_pRet->playerEnergy = 0.f; // ???
-	t_pRet->playerCash = 0.f; // ???
+	t_ret->showFPS = 0; //???
+	t_ret->playerHealth = 0.f; // ???
+	t_ret->playerEnergy = 0.f; // ???
+	t_ret->playerCash = 0.f; // ???
 	
-	t_pRet->pText = sfString_Create();
-	sfString_SetSize(i_pUI->pText, 15);
-	sfString_SetFont(t_pRet->pText, sfFont_GetDefaultFont());
+	t_ret->pText = sfString_Create();
+	sfString_SetSize(t_ret->pText, 15);
+	sfString_SetFont(t_ret->pText, sfFont_GetDefaultFont());
 
-	return t_pRet;
+	return t_ret;
 }
 
 const int
-F_UI_update(const F_UI* i_pUI) {
+fUI_update(const fUI* i_pUI) {
 	return AOK;
 }
 
 const int
-F_UI_draw(const F_UI* i_pUI, const sfRenderWindow* i_pApp) {
+fUI_draw(fUI* i_pUI, sfRenderWindow* i_pApp) {
 	
 	int t_value = 0;
 	char* t_string;
@@ -73,8 +73,6 @@ F_UI_draw(const F_UI* i_pUI, const sfRenderWindow* i_pApp) {
 
 	}
 
-	
-
 	// Printing messages
 	for (int i = 0; i < MESSAGE_ROWS; i++) {
 		sfString_SetText(i_pUI->pText, i_pUI->pMessages[i]);
@@ -87,7 +85,7 @@ F_UI_draw(const F_UI* i_pUI, const sfRenderWindow* i_pApp) {
 }
 
 const int
-fUI_setMessage(F_UI* i_pUI, char* i_pMessage) {
+fUI_setMessage(fUI* i_pUI, char* i_pMessage) {
 	// 9 = mem leak!!!!!!!!one1!!!!!!!!!!!!!!!
 	i_pUI->pMessages[9] = i_pUI->pMessages[8];
 	i_pUI->pMessages[8] = i_pUI->pMessages[7];

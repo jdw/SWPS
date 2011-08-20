@@ -27,17 +27,17 @@ typedef struct F_UI {
 	float playerEnergy;
 	float playerCash;
 	sfString* pText;
-} F_UI;
+} fUI;
 
-F_UI*
-F_UI_create();
-
-const int
-F_UI_update(const F_UI* i_pUI);
+fUI*
+fUI_create();
 
 const int
-F_UI_draw(const F_UI* i_pUI, const sfRenderWindow* i_pApp);
+fUI_update(const fUI* i_pUI);
 
 const int
-fUI_setMessage(F_UI* i_pUI, char* i_pMessage);
+fUI_draw(fUI* i_pUI, sfRenderWindow* i_pApp);
+
+const int
+fUI_setMessage(fUI* i_pUI, char* i_pMessage);
 #endif // F_UI_H
