@@ -6,6 +6,7 @@
 #include <SFML/Graphics/Font.h>
 
 #include "ui.h"
+#include "map.h"
 
 static sfFont* g_debugFont = 0;
 static sfWindowSettings WINDOW_SETTINGS = {24, 8, 0}; 
@@ -124,10 +125,11 @@ main() {
 		"###############"
 	};
 
-																																																							int t_quit = 0;
+	int t_quit = 0;
 	int t_x = 100 + 4 * 16;
 	int t_y = 100 + 3 * 16;
 	
+	fMap* test = fMap_create(10, 10);
 
 	// Create a graphical string to display 
 	t_pText = sfString_Create();
@@ -154,6 +156,9 @@ main() {
 		
 		// Update UI
 		fUI_update(g_pUI);
+
+		// Update map
+		fMap_update(test);
 
 		// Draw the map
 		for (int y = 0; y < 15; ++y)
