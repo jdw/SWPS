@@ -1,16 +1,26 @@
-#include <tile.h>
+#include "tile.h"
 
 #include <stdlib.h>
 
-F_tile*
-F_stuff_tile_create() {
-	F_tile* t_ret = (F_tile*) malloc(sizeof(F_tile));
-	t_ret->neighbors = (F_tile**) malloc(4 * sizeof(F_tile*));
-	t_ret->neighbors[0] = (F_tile*)0;
-	t_ret->neighbors[1] = (F_tile*)1;
-	t_ret->neighbors[2] = (F_tile*)2;
-	t_ret->neighbors[3] = (F_tile*)3;
+fTile*
+fTile_create() {
+	fTile* t_ret = (fTile*) malloc(sizeof(fTile));
 
-	t_ret->type = MAX;
+	fTile_reset(t_ret);
 	return t_ret;
+}
+
+int
+fTile_reset(fTile* t) {
+	t->found = 0;
+	t->lastSeen = 0;
+	t->traversable = 1;
+	
+	return 0;
+}
+
+int
+fTile_update(fTile* t) {
+	
+	return 0;
 }

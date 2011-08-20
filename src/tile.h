@@ -5,18 +5,24 @@ typedef enum {
 	WALL,
 	DOOR,
 	FLOOR,
-	STAIRS_DOWN,
-	STAIRS_UP,
+	STAIRS,
 
 	MAX
-} F_tileType;
+} fTile_type;
 
-typedef struct F_tile {
-	struct F_tile** neighbors;
-	F_tileType type;
-} F_tile;
+typedef struct fTile {
+	fTile_type type;
+	int found;
+	int lastSeen;
+	int traversable;
+} fTile;
 
-F_tile*
-F_stuff_tile_create();
+fTile*
+fTile_create();
 
-#endif // F_STUFF_TILE_H
+int fTile_reset(fTile* t);
+
+int
+fTile_update(fTile* t);
+
+#endif // F_TILE_H
