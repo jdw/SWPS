@@ -1,30 +1,37 @@
-#ifndef F_STUFF_MAP_H
-#define F_STUFF_MAP_H
+#ifndef F_MAP_H
+#define F_MAP_H
 
-#include <stuff/map.h>
+#include "tile.h"
 
 /*
 typedef enum {
-        STARTING,
-        RUNNING,
-        PAUSED,
-        HALTING
+	STARTING,
+	RUNNING,
+	PAUSED,
+	HALTING
 } F_dungeonStatus;
 */
+
+
 typedef struct {
-        F_dungeonStatus status;
-        int width;
+	// ??? F_dungeonStatus status;
+	int width;
 	int height;
-	
-} F_map;
+	fTile** tiles;
+	// exits**
+	// ??? filename
+} fMap;
 
-static int
-F_stuff_map_init(F_map*);
+fMap*
+fMap_create(const int, const int);
 
-static int
-F_stuff_map_update(F_map*);
+int
+fMap_init(fMap*);
 
-static int
-F_stuff_map_halt(F_map*);
+int
+fMap_update(fMap*);
 
-#endif // F_STUFF_MAP_H
+int
+fMap_halt(fMap*);
+
+#endif // F_MAP_H
