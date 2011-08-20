@@ -3,6 +3,9 @@
 
 #include "tile.h"
 
+struct sfRenderWindow;
+#include <SFML/Graphics.h>
+
 /*
 typedef enum {
 	STARTING,
@@ -32,6 +35,6 @@ int
 fMap_update(fMap*);
 
 int
-fMap_halt(fMap*);
+fMap_draw(fMap* t, sfRenderWindow* i_pApp);
 
 #endif // F_MAP_H
