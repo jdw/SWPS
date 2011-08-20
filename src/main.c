@@ -15,7 +15,7 @@ static sfSprite* g_pWall;
 static sfSprite* g_pFloor;
 static sfSprite* g_pPlayer;
 static sfSprite* g_pNPC;
-static F_UI* g_pUI;
+static fUI* g_pUI;
 
 static int
 init() {
@@ -109,7 +109,7 @@ main() {
 	}
 
 	sfString* t_pText = 0;
-	g_pUI = F_UI_create();
+	g_pUI = fUI_create();
 
 	char *t_pMap[] = {
 		"###############",
@@ -153,7 +153,7 @@ main() {
 		sfRenderWindow_Clear(APP, sfBlack);
 		
 		// Update UI
-		F_UI_update(g_pUI);
+		fUI_update(g_pUI);
 
 		// Draw the map
 		for (int y = 0; y < 15; ++y)
@@ -170,15 +170,15 @@ main() {
 		F_draw(PLAYER, g_pPlayer, t_x, t_y); 
 		
 		// Draw UI
-		F_UI_draw(g_pUI, APP);
+		fUI_draw(g_pUI, APP);
 
 		// Update the window
 		sfRenderWindow_Display(APP);
-   	 }
+	}
  
 	// Cleanup resources
 	sfString_Destroy(t_pText);
 	sfRenderWindow_Destroy(APP);
  
 	return EXIT_SUCCESS;
- }
+}
