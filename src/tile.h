@@ -1,6 +1,7 @@
 #ifndef F_STUFF_TILE_H
 #define F_STUFF_TILE_H
 
+// Types of tiles
 typedef enum {
 	WALL,
 	DOOR,
@@ -10,11 +11,19 @@ typedef enum {
 	MAX
 } fTile_type;
 
+// Reason why the tile is blocked
+typedef enum {
+	ITEM,
+	CHARACTER,
+	TILE_TYPE
+} fTile_blocked;
+
 typedef struct fTile {
 	fTile_type type;
 	int found;
 	int lastSeen;
-	int traversable;
+	struct fCharacter* chars;
+	struct fItem* items;
 } fTile;
 
 fTile*
@@ -24,5 +33,9 @@ int fTile_reset(fTile* t);
 
 int
 fTile_update(fTile* t);
+
+int
+fTile_isBlocked(fTile*);
+
 
 #endif // F_TILE_H
