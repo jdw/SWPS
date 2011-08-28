@@ -6,7 +6,6 @@
 #include <SFML/Graphics.h>
 
 struct sfRenderWindow;
-typedef struct fActor fActor;
 
 /*
 typedef enum {
@@ -16,7 +15,6 @@ typedef enum {
 	HALTING
 } F_dungeonStatus;
 */
-
 
 struct fMap {
 	// ??? F_dungeonStatus status;
@@ -42,6 +40,6 @@ int
 fMap_draw(fMap*, sfRenderWindow* i_pApp);
 
 int
-fMap_setActor(fMap* m, fActor* a, int x, int y);
+fMap_setActor(fMap* m, struct fActor* a, int x, int y);
 
 #endif // F_MAP_H
