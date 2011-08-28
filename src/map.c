@@ -87,3 +87,18 @@ fMap_draw(fMap* m, sfRenderWindow* i_pApp) {
 	
 	return 0;
 }
+
+int
+fMap_setActor(fMap* m, fActor* a, int x, int y) {	
+	if (0 <= x && x < m->width) return MAP_POS_X_OUTSIDE;
+	if (0 <= y && y < m->height) return MAP_POS_Y_OUTSIDE;
+	
+	return fTile_setActor(m->tiles[x][y], a);
+}
+
+/*
+int
+fMap_setItem(fMap* m, fItem* i, int x, int y) {
+
+}
+*/

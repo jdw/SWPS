@@ -3,8 +3,10 @@
 
 #include "tile.h"
 
-struct sfRenderWindow;
 #include <SFML/Graphics.h>
+
+struct sfRenderWindow;
+typedef struct fActor fActor;
 
 /*
 typedef enum {
@@ -16,14 +18,16 @@ typedef enum {
 */
 
 
-typedef struct {
+struct fMap {
 	// ??? F_dungeonStatus status;
 	int width;
 	int height;
 	fTile** tiles;
 	// exits**
 	// ??? filename
-} fMap;
+};
+
+typedef struct fMap fMap;
 
 fMap*
 fMap_create(const int, const int);
@@ -35,6 +39,9 @@ int
 fMap_update(fMap*);
 
 int
-fMap_draw(fMap* t, sfRenderWindow* i_pApp);
+fMap_draw(fMap*, sfRenderWindow* i_pApp);
+
+int
+fMap_setActor(fMap* m, fActor* a, int x, int y);
 
 #endif // F_MAP_H
