@@ -7,13 +7,12 @@
 
 #include "ui.h"
 #include "map.h"
+#include "actor.h"
 
 static sfFont* g_debugFont = 0;
 static sfWindowSettings WINDOW_SETTINGS = {24, 8, 0}; 
 static sfVideoMode VIDEO_MODE = {800, 600, 32};
 static sfRenderWindow* APP = 0;
-static sfSprite* g_pPlayer;
-static sfSprite* g_pNPC;
 static fUI* g_pUI;
 
 static int
@@ -25,17 +24,6 @@ init() {
 	// Loading debug font
 	g_debugFont = sfFont_CreateFromFile("ass/FreeSerif.ttf", 50, NULL);
 	if (!g_debugFont) return FAILED_LOADING_FONT_FILE;
-
-	// Player and NPC
-	sfImage* t_pImage = sfImage_CreateFromFile("ass/hero.png");
-	if (!t_pImage) return EXIT_FAILURE;
-	g_pPlayer = sfSprite_Create();
-	sfSprite_SetImage(g_pPlayer, t_pImage);
-
-	t_pImage = sfImage_CreateFromFile("ass/enemah.png");
-	if (!t_pImage) return EXIT_FAILURE;
-	g_pNPC = sfSprite_Create();
-	sfSprite_SetImage(g_pNPC, t_pImage);
 
 	return AOK;
 }
@@ -97,20 +85,8 @@ main() {
 	}
 
 	sfString* t_pText = 0;
+	fActor* t_pAct = fActor_create();
 	g_pUI = fUI_create();
-
-	char *t_pMap[] = {
-		"###############",
-		"#      #      #",
-		"#             #",
-		"#      ### ####",
-		"#### ###   #  #",
-		"#          #  #",
-		"#          #  #",
-		"#             #",
-		"#          #  #",
-		"###############"
-	};
 
 	int t_quit = 0;
 	int t_x = 100 + 4 * 16;
@@ -133,6 +109,9 @@ main() {
 
 	fUI_setMessage(g_pUI, "hej");
 
+	int t_ret =	fMap_setActor(test, t_pAct, 2,2);
+	if (t_ret) printf("Nope, actor not set to map, error: %d\n", t_ret);
+
 	int t_frameCount = 0;
 	// Start the game loop
 	while (sfRenderWindow_IsOpened(APP)) {
@@ -152,10 +131,10 @@ main() {
 		fMap_draw(test, APP);
 		
 		// Draw enemy
-		F_draw(NPC, g_pNPC, 100 + 3 * 16, 100 + 3 * 16);
+	//	F_draw(NPC, g_pNPC, 100 + 3 * 16, 100 + 3 * 16);
 		
 		// Draw player
-		F_draw(PLAYER, g_pPlayer, t_x, t_y); 
+	//	F_draw(PLAYER, g_pPlayer, t_x, t_y); 
 		
 		// Draw UI
 		fUI_draw(g_pUI, APP);
