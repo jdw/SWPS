@@ -16,22 +16,22 @@ fActor_create();
 int
 fActor_reset(fActor*);
 
-void
+int
 fActor_setName(fActor*, char*);
 
-char*
-fActor_getName(fActor*);
+int
+fActor_getName(fActor*, char**);
 
-void
+int
 fActor_setHealth(fActor*, float);
 
-float
-fActor_getHealth(fActor*);
+int
+fActor_getHealth(fActor*, float*);
 
-void
+int
 fActor_setEnergy(fActor*, float);
 
-float
-fActor_getEnergy(fActor* c) { return c->energy; } 
+int
+fActor_getEnergy(fActor*, float*);
 
 #endif // F_ACTOR_H
