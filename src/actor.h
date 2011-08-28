@@ -1,38 +1,37 @@
-#ifndef F_CHARACTER_H
-#define F_CHARACTER_H
+#ifndef F_ACTOR_H
+#define F_ACTOR_H
 
-//struct sfRenderWindow;
-//#include <SFML/Graphics.h>
-
-
-typedef struct {
+struct fActor {
 	float health;
 	float energy;
 	struct fItem* items;
 	char* name;		
-} fCharacter;
+};
 
-fCharacter*
-fCharacter_create();
+typedef struct fActor fActor;
+
+fActor*
+fActor_create();
 
 int
-fCharacter_reset(fCharacter*);
+fActor_reset(fActor*);
 
 void
-fCharacter_setName(fCharacter*, char*);
+fActor_setName(fActor*, char*);
 
 char*
-fCharacter_getName(fCharacter*);
+fActor_getName(fActor*);
 
 void
-fCharacter_setHealth(fCharacter*, float);
+fActor_setHealth(fActor*, float);
 
 float
-fCharacter_getHealth(fCharacter*);
+fActor_getHealth(fActor*);
 
 void
-fCharacter_setEnergy(fCharacter*, float);
+fActor_setEnergy(fActor*, float);
 
-float fCharacter_getEnergy(fCharacter* c) { return c->energy; } 
+float
+fActor_getEnergy(fActor* c) { return c->energy; } 
 
-#endif // F_CHARACTER_H
+#endif // F_ACTOR_H

@@ -1,3 +1,3 @@
-#include "character.h"
+#include "actor.h"
 
 
