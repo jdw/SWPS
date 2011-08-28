@@ -17,6 +17,8 @@ int
 fTile_reset(fTile* t) {
 	t->found = 0;
 	t->lastSeen = 0;
+	t->actor = 0;
+	t->items = 0;
 	
 	return 0;
 }
