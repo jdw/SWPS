@@ -11,31 +11,26 @@ typedef enum {
 	MAX
 } fTile_type;
 
-// Reason why the tile is blocked
-typedef enum {
-	ITEM,
-	CHARACTER,
-	TILE_TYPE
-} fTile_blocked;
-
-typedef struct fTile {
+struct fTile {
 	fTile_type type;
 	int found;
 	int lastSeen;
-	struct fCharacter* chars;
+	struct fActor* actor;
 	struct fItem* items;
-} fTile;
+};
+
+typedef struct fTile fTile;
 
 fTile*
 fTile_create();
 
-int fTile_reset(fTile* t);
+int
+fTile_reset(fTile* t);
 
 int
 fTile_update(fTile* t);
 
 int
 fTile_isBlocked(fTile*);
-
 
 #endif // F_TILE_H
