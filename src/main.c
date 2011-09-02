@@ -130,12 +130,6 @@ main() {
 		// Draw the map
 		fMap_draw(test, APP);
 		
-		// Draw enemy
-	//	F_draw(NPC, g_pNPC, 100 + 3 * 16, 100 + 3 * 16);
-		
-		// Draw player
-	//	F_draw(PLAYER, g_pPlayer, t_x, t_y); 
-		
 		// Draw UI
 		fUI_draw(g_pUI, APP);
 
