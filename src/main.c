@@ -16,12 +16,14 @@ static sfVideoMode VIDEO_MODE = {800, 600, 32};
 static sfRenderWindow* APP = 0;
 static fUI* g_pUI;
 static int QUIT = 0;
+static int INPUTED = 0;
 
 // Graphics
 static sfSprite* g_pWall = 0;
 static sfSprite* g_pFloor = 0;
 static sfSprite* g_pPlayer = 0;
 static sfSprite* g_pNPC = 0;
+static sfSprite* g_pHalfseen = 0;
 
 // Actors
 static fActor* PLAYER = 0;
@@ -46,6 +48,11 @@ init() {
 	if (!t_pImage) return FAILED_LOADING_WALL_GRAPHICS;
 	g_pWall = sfSprite_Create();
 	sfSprite_SetImage(g_pWall, t_pImage);
+	
+	t_pImage = sfImage_CreateFromFile("ass/halfseen.png");
+	if (!t_pImage) return FAILED_LOADING_HALFSEEN_GRAPHICS;
+	g_pHalfseen = sfSprite_Create();
+	sfSprite_SetImage(g_pHalfseen, t_pImage);
 
 	// Player and NPC
 	t_pImage = sfImage_CreateFromFile("ass/hero.png");
@@ -73,7 +80,7 @@ typedef enum {
 */
 int
 scene_setup(fScene* s) {
-	fMap* t_m= fMap_create(10, 10);
+	fMap* t_m= fMap_create(50, 50);
 	fMap_init(t_m);
 	s->map = t_m;
 	
@@ -92,7 +99,7 @@ int
 scene_update(fScene* s) {
 	fMap_update(s->map);
 
-	fMap_setVisibleArea(s->map, PLAYER->x, PLAYER->y, 2);
+	fMap_setVisibleArea(s->map, PLAYER->x, PLAYER->y, 5);
 
 	return AOK;
 }
@@ -104,12 +111,11 @@ scene_draw(fScene* s) {
 	for (int x = 0; x < m->width; ++x)
 		for (int y = 0; y < m->height; ++y) {
 			fTile* t = &m->tiles[x][y];
-			if (t->lastSeen != 1) continue;
-			
+			if (!t->lastSeen) continue;
 			int t_x, t_y;
 			sfSprite* t_s;
 
-			switch (m->tiles[x][y].type) {
+			switch (t->type) {
 				case FLOOR: {
 					t_x = x * sfSprite_GetWidth(g_pFloor);
 					t_y = y * sfSprite_GetHeight(g_pFloor);
@@ -125,6 +131,10 @@ scene_draw(fScene* s) {
 			sfSprite_SetPosition(t_s, t_x, t_y);
 			sfRenderWindow_DrawSprite(APP, t_s);
 			
+			if (t->lastSeen > 1) {
+				sfSprite_SetPosition(g_pHalfseen, t_x, t_y);
+				sfRenderWindow_DrawSprite(APP, g_pHalfseen);
+			}
 			if (m->tiles[x][y].actor) {
 				sfSprite_SetPosition(g_pPlayer, t_x, t_y);
 				sfRenderWindow_DrawSprite(APP, g_pPlayer);
@@ -182,7 +192,8 @@ scene_input(fScene* s) {
 		if (t_ret == TILE_BLOCKED_ITEM) t_pMsg = "There is an item in the way!";
 	    if (t_ret == TILE_BLOCKED_ACTOR) t_pMsg = "There is an actor in the way!";
 	    if (t_ret == TILE_BLOCKED_TYPE) t_pMsg = "That path is blocked!";
-				
+		
+		INPUTED = 1;				
 		fUI_setMessage(g_pUI, t_pMsg);
 	}
 
@@ -205,13 +216,17 @@ main() {
 	t_s->draw = scene_draw;
 	t_s->input = scene_input;
 
+	t_s->setup(t_s);
 	// Start the game loop
 	while (t_s->state != DONE) {
+		fScene_input(t_s);
+		
+		if (!INPUTED) continue;
+		INPUTED = 0;
+
 		fUI_update(g_pUI); // Update UI
 		fScene_update(t_s); // Update scene
 		
-		fScene_input(t_s);
-
 		sfRenderWindow_Clear(APP, sfBlack); // Clear the screen
 		fScene_draw(t_s); // Draw the scene
 		fUI_draw(g_pUI, APP); // Draw UI
