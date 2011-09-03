@@ -15,7 +15,6 @@ fTile_create() {
 
 int
 fTile_reset(fTile* t) {
-	t->found = 0;
 	t->lastSeen = 0;
 	t->actor = 0;
 	t->items = 0;
@@ -25,8 +24,9 @@ fTile_reset(fTile* t) {
 
 int
 fTile_update(fTile* t) {
+	if (t->lastSeen) t->lastSeen++;	
 	
-	return 0;
+	return AOK;
 }
 
 int

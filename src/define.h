@@ -2,11 +2,13 @@
 #define F_DEFINE_H
 
 typedef enum {
-	AOK,
+	AOK = 0,
 	// Exit reasons for program
 	NO_DEBUG_FONT,
 	FAILED_VIDEO_MODE,
 	FAILED_LOADING_FONT_FILE,
+	FAILED_LOADING_FLOOR_GRAPHICS,
+	FAILED_LOADING_WALL_GRAPHICS,
 	// Reason why a tile could be blocked
 	TILE_BLOCKED_ITEM,
 	TILE_BLOCKED_ACTOR,

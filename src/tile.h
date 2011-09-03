@@ -13,8 +13,7 @@ typedef enum {
 
 struct fTile {
 	fTile_type type;
-	int found;
-	int lastSeen;
+	int lastSeen; // 0 = never, 1 = just now, > 1 some time ago
 	struct fActor* actor;
 	struct fItem* items;
 };
@@ -32,5 +31,14 @@ fTile_update(fTile* t);
 
 int
 fTile_isBlocked(fTile*);
+
+int
+fTile_setActor(fTile*, struct fActor*);
+
+struct fActor*
+fTile_getActor(fTile*);
+
+int
+fTile_removeActor(fTile*);
 
 #endif // F_TILE_H

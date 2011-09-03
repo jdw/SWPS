@@ -7,22 +7,10 @@
 
 struct sfRenderWindow;
 
-/*
-typedef enum {
-	STARTING,
-	RUNNING,
-	PAUSED,
-	HALTING
-} F_dungeonStatus;
-*/
-
 struct fMap {
-	// ??? F_dungeonStatus status;
 	int width;
 	int height;
 	fTile** tiles;
-	// exits**
-	// ??? filename
 };
 
 typedef struct fMap fMap;
@@ -41,5 +29,11 @@ fMap_draw(fMap*, sfRenderWindow* i_pApp);
 
 int
 fMap_setActor(fMap* m, struct fActor* a, int x, int y);
+
+int
+fMap_setVisibleArea(fMap* m, int x, int y, int r);
+
+int
+fMap_getTile(fMap* m, int x, int y, fTile** t);
 
 #endif // F_MAP_H

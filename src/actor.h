@@ -5,7 +5,8 @@ struct fActor {
 	float health;
 	float energy;
 	struct fItem* items;
-	char* name;		
+	char* name;
+	int x, y;		
 };
 
 typedef struct fActor fActor;
