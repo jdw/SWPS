@@ -11,43 +11,48 @@
 fUI*
 fUI_create() {
 	fUI* t_ret = (fUI*) malloc(sizeof(fUI));
-	
-	for (int i = 0; i < MESSAGE_ROWS; ++i)
-		t_ret->pMessages[i] = 0;
-
-	t_ret->pInfos = (fUI_info*) malloc(2 * sizeof(fUI_info));
-	t_ret->pInfos[0].pKey = "HP";
-	t_ret->pInfos[0].type = FLOAT;
-	t_ret->pInfos[0].fValue = 1;
-	t_ret->pInfos[1].pKey = "MP";
-	t_ret->pInfos[1].type = FLOAT;
-	t_ret->pInfos[1].fValue = .5f;
-
-	t_ret->showFPS = 0; //???
-	t_ret->playerHealth = 0.f; // ???
-	t_ret->playerEnergy = 0.f; // ???
-	t_ret->playerCash = 0.f; // ???
-	
-	t_ret->pText = sfString_Create();
-	sfString_SetSize(t_ret->pText, 15);
-	sfString_SetFont(t_ret->pText, sfFont_GetDefaultFont());
 
 	return t_ret;
 }
 
 const int
-fUI_update(const fUI* i_pUI) {
+fUI_reset(fUI* const u) {	
+	for (int i = 0; i < MESSAGE_ROWS; ++i)
+		u->pMessages[i] = 0;
+
+	u->pInfos = (fUI_info*) malloc(2 * sizeof(fUI_info));
+	u->pInfos[0].pKey = "HP";
+	u->pInfos[0].type = FLOAT;
+	u->pInfos[0].fValue = 1;
+	u->pInfos[1].pKey = "MP";
+	u->pInfos[1].type = FLOAT;
+	u->pInfos[1].fValue = .5f;
+
+	u->showFPS = 0; //???
+	u->playerHealth = 0.f; // ???
+	u->playerEnergy = 0.f; // ???
+	u->playerCash = 0.f; // ???
+	
+	u->pText = sfString_Create();
+	sfString_SetSize(u->pText, 15);
+	sfString_SetFont(u->pText, sfFont_GetDefaultFont());
+
 	return AOK;
 }
 
 const int
-fUI_draw(fUI* i_pUI, sfRenderWindow* i_pApp) {
+fUI_update(fUI* const u) {
+	return AOK;
+}
+
+const int
+fUI_draw(fUI* const u, sfRenderWindow* i_pApp) {
 	
 	int t_value = 0;
 	char* t_string;
 
 	for (int i = 0; i < 2; i++) { 
-		t_value = 10 * i_pUI->pInfos[i].fValue;
+		t_value = 10 * u->pInfos[i].fValue;
 		switch(t_value) {
 			case 0: t_string = "[          ]\0"; break;
 			case 1: t_string = "[|         ]\0"; break;
@@ -66,37 +71,37 @@ fUI_draw(fUI* i_pUI, sfRenderWindow* i_pApp) {
 		const int BUFFER_SIZE = 100;
 		char buf[BUFFER_SIZE];
 		const char* t = &buf;
-		snprintf(t, BUFFER_SIZE, "%s: %s", i_pUI->pInfos[i].pKey, t_string);
-		sfString_SetText(i_pUI->pText, t);
-		sfString_SetPosition(i_pUI->pText, 700, 550 - i * 20);
-		sfRenderWindow_DrawString(i_pApp, i_pUI->pText);
+		snprintf(t, BUFFER_SIZE, "%s: %s", u->pInfos[i].pKey, t_string);
+		sfString_SetText(u->pText, t);
+		sfString_SetPosition(u->pText, 700, 550 - i * 20);
+		sfRenderWindow_DrawString(i_pApp, u->pText);
 
 	}
 
 	// Printing messages
 	for (int i = 0; i < MESSAGE_ROWS; i++) {
-		sfString_SetText(i_pUI->pText, i_pUI->pMessages[i]);
-		sfString_SetPosition(i_pUI->pText, 10, 550 - i * 20);
-		sfRenderWindow_DrawString(i_pApp, i_pUI->pText);
+		sfString_SetText(u->pText, u->pMessages[i]);
+		sfString_SetPosition(u->pText, 10, 550 - i * 20);
+		sfRenderWindow_DrawString(i_pApp, u->pText);
 	}
 
-	//i_pUI
+	//u
 	return AOK;
 }
 
 const int
-fUI_setMessage(fUI* i_pUI, char* i_pMessage) {
+fUI_setMessage(fUI* const u, char* i_pMessage) {
 	// 9 = mem leak!!!!!!!!one1!!!!!!!!!!!!!!!
-	i_pUI->pMessages[9] = i_pUI->pMessages[8];
-	i_pUI->pMessages[8] = i_pUI->pMessages[7];
-	i_pUI->pMessages[7] = i_pUI->pMessages[6];
-	i_pUI->pMessages[6] = i_pUI->pMessages[5];
-	i_pUI->pMessages[5] = i_pUI->pMessages[4];
-	i_pUI->pMessages[4] = i_pUI->pMessages[3];
-	i_pUI->pMessages[3] = i_pUI->pMessages[2];
-	i_pUI->pMessages[2] = i_pUI->pMessages[1];
-	i_pUI->pMessages[1] = i_pUI->pMessages[0];
-	i_pUI->pMessages[0] = i_pMessage;
+	u->pMessages[9] = u->pMessages[8];
+	u->pMessages[8] = u->pMessages[7];
+	u->pMessages[7] = u->pMessages[6];
+	u->pMessages[6] = u->pMessages[5];
+	u->pMessages[5] = u->pMessages[4];
+	u->pMessages[4] = u->pMessages[3];
+	u->pMessages[3] = u->pMessages[2];
+	u->pMessages[2] = u->pMessages[1];
+	u->pMessages[1] = u->pMessages[0];
+	u->pMessages[0] = i_pMessage;
 
 	return AOK;
 }

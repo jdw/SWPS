@@ -5,21 +5,23 @@
 struct sfRenderWindow;
 #include <SFML/Graphics.h>
 
-typedef enum {
+enum fUI_infoType {
 	STRING,
 	INT,
 	FLOAT
-} fUI_info_type;
+};
+typedef enum fUI_infoType fUI_infoType;
 
-typedef struct fUI_info {
+struct fUI_info {
 	char* pKey;
-	fUI_info_type type;
+	fUI_infoType type;
 	int iValue;
 	float fValue;
 	char* pValue;
-} fUI_info;
+};
+typedef struct fUI_info fUI_info;
 
-typedef struct F_UI {
+struct fUI {
 	char* pMessages[MESSAGE_ROWS];
 	fUI_info* pInfos;
 	int showFPS;
@@ -27,17 +29,22 @@ typedef struct F_UI {
 	float playerEnergy;
 	float playerCash;
 	sfString* pText;
-} fUI;
+};
+typedef struct fUI fUI;
 
 fUI*
 fUI_create();
 
 const int
-fUI_update(const fUI* i_pUI);
+fUI_reset(fUI* const);
 
 const int
-fUI_draw(fUI* i_pUI, sfRenderWindow* i_pApp);
+fUI_update(fUI* const);
 
 const int
-fUI_setMessage(fUI* i_pUI, char* i_pMessage);
+fUI_draw(fUI* const, sfRenderWindow* i_pApp);
+
+const int
+fUI_setMessage(fUI* const, char*);
+
 #endif // F_UI_H
