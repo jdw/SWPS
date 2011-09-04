@@ -50,3 +50,17 @@ fScene_input(fScene* s) {
  		
 	return AOK;
 }
+
+int
+fScene_teardown(fScene* s) {
+	if (s->teardown) return s->teardown(s);
+ 		
+	return AOK;
+}
+
+int
+fScene_setup(fScene* s) {
+	if (s->setup) return s->setup(s);
+ 		
+	return AOK;
+}
