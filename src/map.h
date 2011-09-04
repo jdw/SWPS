@@ -3,10 +3,6 @@
 
 #include "tile.h"
 
-#include <SFML/Graphics.h>
-
-struct sfRenderWindow;
-
 struct fMap {
 	int width;
 	int height;
@@ -30,6 +26,9 @@ fMap_draw(fMap* const);
 
 const int
 fMap_setActor(fMap* const m, struct fActor* const a, int x, int y);
+
+const int
+fMap_setItem(fMap* const, struct fItem* const, int x, int y);
 
 const int
 fMap_setVisibleArea(fMap* const m, int x, int y, int r);
