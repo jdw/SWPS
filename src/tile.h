@@ -2,14 +2,12 @@
 #define F_STUFF_TILE_H
 
 // Types of tiles
-typedef enum {
+enum fTile_type {
 	WALL,
 	DOOR,
-	FLOOR,
-	STAIRS,
-
-	MAX
-} fTile_type;
+	FLOOR
+};
+typedef enum fTile_type fTile_type;
 
 struct fTile {
 	fTile_type type;
@@ -17,7 +15,6 @@ struct fTile {
 	struct fActor* actor;
 	struct fItem* items;
 };
-
 typedef struct fTile fTile;
 
 fTile*

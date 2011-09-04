@@ -2,6 +2,7 @@
 
 #include "define.h"
 
+#include <stdlib.h>
 fActor*
 fActor_create() {
 	fActor* t_ret = (fActor*) malloc(sizeof(fActor));

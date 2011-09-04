@@ -15,12 +15,12 @@ static sfWindowSettings WINDOW_SETTINGS = {24, 8, 0};
 static sfVideoMode VIDEO_MODE = {800, 600, 32};
 static sfRenderWindow* APP = 0;
 static fUI* g_pUI;
-static int QUIT = 0;
 static int INPUTED = 0;
 
 // Graphics
 static sfSprite* g_pWall = 0;
 static sfSprite* g_pFloor = 0;
+static sfSprite* g_pDoor = 0;
 static sfSprite* g_pPlayer = 0;
 static sfSprite* g_pNPC = 0;
 static sfSprite* g_pHalfseen = 0;
@@ -108,6 +108,9 @@ int
 scene_draw(fScene* s) {
 	// Map
 	fMap* m = s->map;
+	int t_offX = -(PLAYER->x * 16) + 800 / 2;
+	int t_offY = -(PLAYER->y * 16) + 200;
+
 	for (int x = 0; x < m->width; ++x)
 		for (int y = 0; y < m->height; ++y) {
 			fTile* t = &m->tiles[x][y];
@@ -117,13 +120,13 @@ scene_draw(fScene* s) {
 
 			switch (t->type) {
 				case FLOOR: {
-					t_x = x * sfSprite_GetWidth(g_pFloor);
-					t_y = y * sfSprite_GetHeight(g_pFloor);
+					t_x = t_offX + x * sfSprite_GetWidth(g_pFloor);
+					t_y = t_offY + y * sfSprite_GetHeight(g_pFloor);
 					t_s = g_pFloor;
 				} break;
 				case WALL: {
-					t_x = x * sfSprite_GetWidth(g_pFloor);
-					t_y = y * sfSprite_GetHeight(g_pFloor);
+					t_x = t_offX + x * sfSprite_GetWidth(g_pFloor);
+					t_y = t_offY + y * sfSprite_GetHeight(g_pFloor);
 					t_s = g_pWall;
 				} break;
 			}
@@ -135,12 +138,15 @@ scene_draw(fScene* s) {
 				sfSprite_SetPosition(g_pHalfseen, t_x, t_y);
 				sfRenderWindow_DrawSprite(APP, g_pHalfseen);
 			}
-			if (m->tiles[x][y].actor) {
+
+			if (t->actor) {
 				sfSprite_SetPosition(g_pPlayer, t_x, t_y);
 				sfRenderWindow_DrawSprite(APP, g_pPlayer);
 			}
 							
 		}
+
+	return AOK;
 }
 
 int
