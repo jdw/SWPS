@@ -272,7 +272,7 @@ main() {
 	t_s->draw = scene_draw;
 	t_s->input = scene_input;
 	fScene_setup(t_s);
-	
+
 	// Start the game loop
 	while (t_s->state != DONE) {
 		fScene_input(t_s);

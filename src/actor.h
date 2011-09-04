@@ -6,33 +6,33 @@ struct fActor {
 	float energy;
 	struct fItem* items;
 	char* name;
-	int x, y;		
+	int x, y;
+	// id for net?		
 };
-
 typedef struct fActor fActor;
 
 fActor*
 fActor_create();
 
-int
-fActor_reset(fActor*);
+const int
+fActor_reset(fActor* const);
 
-int
-fActor_setName(fActor*, char*);
+const int
+fActor_setName(fActor* const, char*);
 
-int
-fActor_getName(fActor*, char**);
+const int
+fActor_getName(fActor* const, char**);
 
-int
-fActor_setHealth(fActor*, float);
+const int
+fActor_setHealth(fActor* const, float);
 
-int
-fActor_getHealth(fActor*, float*);
+const int
+fActor_getHealth(fActor* const, float*);
 
-int
-fActor_setEnergy(fActor*, float);
+const int
+fActor_setEnergy(fActor* const, float);
 
-int
-fActor_getEnergy(fActor*, float*);
+const int
+fActor_getEnergy(fActor* const, float*);
 
 #endif // F_ACTOR_H

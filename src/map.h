@@ -11,6 +11,7 @@ struct fMap {
 	int width;
 	int height;
 	fTile** tiles;
+	const int (*draw)(struct fMap* const);
 };
 
 typedef struct fMap fMap;
@@ -18,22 +19,22 @@ typedef struct fMap fMap;
 fMap*
 fMap_create(const int, const int);
 
-int
-fMap_init(fMap*);
+const int
+fMap_init(fMap* const);
 
-int
-fMap_update(fMap*);
+const int
+fMap_update(fMap* const);
 
-int
-fMap_draw(fMap*, sfRenderWindow* i_pApp);
+const int
+fMap_draw(fMap* const);
 
-int
-fMap_setActor(fMap* m, struct fActor* a, int x, int y);
+const int
+fMap_setActor(fMap* const m, struct fActor* const a, int x, int y);
 
-int
-fMap_setVisibleArea(fMap* m, int x, int y, int r);
+const int
+fMap_setVisibleArea(fMap* const m, int x, int y, int r);
 
-int
-fMap_getTile(fMap* m, int x, int y, fTile** t);
+const int
+fMap_getTile(fMap* const m, int x, int y, fTile** t);
 
 #endif // F_MAP_H

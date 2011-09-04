@@ -22,8 +22,8 @@ fMap_create(const int h, const int w) {
 	return t_ret;
 }
 
-int
-fMap_init(fMap* m) {
+const int
+fMap_init(fMap* const m) {
 	for (int i = 0; i < m->height; ++i)
 		for (int j = 0; j < m->width; ++j) {
 			fTile_reset(&m->tiles[i][j]);
@@ -36,8 +36,8 @@ fMap_init(fMap* m) {
 	return AOK;
 }
 
-int
-fMap_update(fMap* m) {
+const int
+fMap_update(fMap* const m) {
 	for (int x = 0; x < m->width; ++x)
 		for (int y = 0; y < m->height; ++y)
 			fTile_update(&m->tiles[x][y]);
@@ -45,14 +45,14 @@ fMap_update(fMap* m) {
 	return AOK;
 }
 
-int
-fMap_draw(fMap* m, sfRenderWindow* i_pApp) {
-			
+const int
+fMap_draw(fMap* const m) {
+	if (m->draw) return m->draw(m);		
 	return AOK;
 }
 
-int
-fMap_setActor(fMap* m, fActor* a, int x, int y) {	
+const int
+fMap_setActor(fMap* const m, fActor* const a, int x, int y) {	
 	if (!(0 <= x && x < m->width)) return MAP_POS_X_OUTSIDE;
 	if (!(0 <= y && y < m->height)) return MAP_POS_Y_OUTSIDE;
 	
@@ -67,8 +67,8 @@ fMap_setActor(fMap* m, fActor* a, int x, int y) {
 	return AOK;
 }
 
-int
-fMap_getTile(fMap* m, int x, int y, fTile** t) {
+const int
+fMap_getTile(fMap* const m, int x, int y, fTile** t) {
 	if (!(0 <= x && x < m->width)) return MAP_POS_X_OUTSIDE;
 	if (!(0 <= y && y < m->height)) return MAP_POS_Y_OUTSIDE;
 	
@@ -77,8 +77,8 @@ fMap_getTile(fMap* m, int x, int y, fTile** t) {
 	return AOK;
 }
 
-int
-fMap_setVisibleArea(fMap* m, int x, int y, int r) {
+const int
+fMap_setVisibleArea(fMap* const m, int x, int y, int r) {
 	for (int i = x - r; i <= x + r; i++) {
 		for (int j = y - r; j <= y + r; j++) {
 			if (!(i == x - r || i == x + r || j == y - r || j == y + r)) continue;
