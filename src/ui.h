@@ -2,8 +2,6 @@
 #define F_UI_H
 
 #define MESSAGE_ROWS 10
-struct sfRenderWindow;
-#include <SFML/Graphics.h>
 
 enum fUI_infoType {
 	STRING,
@@ -28,7 +26,8 @@ struct fUI {
 	float playerHealth;
 	float playerEnergy;
 	float playerCash;
-	sfString* pText;
+	struct sfString* pText;
+	const int (*draw)(struct fUI* const);
 };
 typedef struct fUI fUI;
 
@@ -42,7 +41,7 @@ const int
 fUI_update(fUI* const);
 
 const int
-fUI_draw(fUI* const, sfRenderWindow* i_pApp);
+fUI_draw(fUI* const);
 
 const int
 fUI_setMessage(fUI* const, char*);
