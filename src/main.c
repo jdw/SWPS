@@ -206,6 +206,49 @@ scene_input(fScene* s) {
 	return AOK;
 }
 
+const int
+ui_draw(fUI* const u) {
+	
+	int t_value = 0;
+	char* t_string;
+
+	for (int i = 0; i < 2; i++) { 
+		t_value = 10 * u->pInfos[i].fValue;
+		switch(t_value) {
+			case 0: t_string = "[          ]\0"; break;
+			case 1: t_string = "[|         ]\0"; break;
+			case 2: t_string = "[||        ]\0"; break;
+			case 3: t_string = "[|||       ]\0"; break;
+			case 4: t_string = "[||||      ]\0"; break;
+			case 5: t_string = "[|||||     ]\0"; break;
+			case 6: t_string = "[||||||    ]\0"; break;
+			case 7: t_string = "[|||||||   ]\0"; break;
+			case 8: t_string = "[||||||||  ]\0"; break;
+			case 9: t_string = "[||||||||| ]\0"; break;
+			default: t_string = "[||||||||||]\0"; break;
+		
+		}
+
+		const int BUFFER_SIZE = 100;
+		char buf[BUFFER_SIZE];
+		const char* t = &buf;
+		snprintf(t, BUFFER_SIZE, "%s: %s", u->pInfos[i].pKey, t_string);
+		sfString_SetText(u->pText, t);
+		sfString_SetPosition(u->pText, 700, 550 - i * 20);
+		sfRenderWindow_DrawString(APP, u->pText);
+
+	}
+
+	// Printing messages
+	for (int i = 0; i < MESSAGE_ROWS; i++) {
+		sfString_SetText(u->pText, u->pMessages[i]);
+		sfString_SetPosition(u->pText, 10, 550 - i * 20);
+		sfRenderWindow_DrawString(APP, u->pText);
+	}
+
+	return AOK;
+}
+
 int
 main() {
 	int t_initReturn;
@@ -215,14 +258,21 @@ main() {
 	}
 
 	g_pUI = fUI_create();
+	fUI_reset(g_pUI);
+	g_pUI->draw = ui_draw;
+	g_pUI->pText = sfString_Create();
+	sfString_SetSize(g_pUI->pText, 15);
+	sfString_SetFont(g_pUI->pText, sfFont_GetDefaultFont());
+
 
 	fScene* t_s = fScene_create();
+	fScene_reset(t_s);
 	t_s->setup = scene_setup;
 	t_s->update = scene_update;
 	t_s->draw = scene_draw;
 	t_s->input = scene_input;
-
-	t_s->setup(t_s);
+	fScene_setup(t_s);
+	
 	// Start the game loop
 	while (t_s->state != DONE) {
 		fScene_input(t_s);
@@ -235,7 +285,7 @@ main() {
 		
 		sfRenderWindow_Clear(APP, sfBlack); // Clear the screen
 		fScene_draw(t_s); // Draw the scene
-		fUI_draw(g_pUI, APP); // Draw UI
+		fUI_draw(g_pUI); // Draw UI
 		sfRenderWindow_Display(APP); // Update window
 	}
 
